@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Noto Kufi Arabic", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Custom Glassmorphism styles for interactive preview */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+}
+
+.glass-nav-panel {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.advice-markdown h1, .advice-markdown h2, .advice-markdown h3 {
+  color: #0A2540;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.advice-markdown h3 {
+  font-size: 1.1rem;
+}
+
+.advice-markdown ul, .advice-markdown ol {
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+  list-style-type: decimal;
+}
+
+[dir="rtl"] .advice-markdown ul, [dir="rtl"] .advice-markdown ol {
+  padding-left: 0;
+  padding-right: 1.25rem;
+}
+
+.advice-markdown li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.advice-markdown strong {
+  font-weight: 700;
+  color: #0A2540;
+}
+

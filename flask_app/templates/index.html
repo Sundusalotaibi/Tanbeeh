@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تنبّه (Tanbeeh) | Financial Risk Analysis Tool</title>
+    <!-- Google Fonts for High-End Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for premium Gauge Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Glassmorphic Stylesheets -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="glow-bg glow-1"></div>
+    <div class="glow-bg glow-2"></div>
+
+    <!-- Glassmorphic Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <div class="brand" id="brandLogo">
+                <span class="arabic-brand">تنبّه</span>
+                <span class="divider">|</span>
+                <span class="english-brand">Tanbeeh</span>
+            </div>
+            <div class="nav-actions">
+                <button id="langToggle" class="btn btn-secondary">
+                    <span class="icon-lang">🌐</span>
+                    <span id="langText">العربية</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-container">
+        <!-- Dashboard Header -->
+        <header class="dashboard-header">
+            <h1 id="titleText">Financial Risk Analysis Dashboard</h1>
+            <p id="subtitleText">Analyze client credentials, compute credit vulnerability index, and generate proactive mitigations.</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Input Panel Card -->
+            <section class="glass-card form-section">
+                <h2 id="formTitle">Financial Profile Assessment</h2>
+                <form id="riskForm" onsubmit="submitForm(event)">
+                    <!-- Input: Monthly Income -->
+                    <div class="form-group">
+                        <label for="income" id="labelIncome">Monthly Income ($)</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="income" required min="1" placeholder="e.g. 8000" value="7500">
+                        </div>
+                    </div>
+
+                    <!-- Input: Monthly Expenses -->
+                    <div class="form-group">
+                        <label for="expenses" id="labelExpenses">Monthly Expenses ($)</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="expenses" required min="0" placeholder="e.g. 3000" value="2800">
+                        </div>
+                    </div>
+
+                    <!-- Input: Total Debt -->
+                    <div class="form-group">
+                        <label for="debt" id="labelDebt">Total Outstanding Debt ($)</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="debt" required min="0" placeholder="e.g. 15000" value="12000">
+                        </div>
+                    </div>
+
+                    <!-- Input: Repayment History Score -->
+                    <div class="form-group">
+                        <label id="labelRepayment" for="repayment">Repayment History Score (0 - 100)</label>
+                        <div class="range-container">
+                            <input type="range" id="repayment" min="0" max="100" value="85" oninput="updateRangeVal(this.value)">
+                            <span id="repaymentVal" class="range-val">85%</span>
+                        </div>
+                        <p class="field-desc" id="repaymentDesc">100 represents immaculate history; 0 represents continuous defaults.</p>
+                    </div>
+
+                    <!-- Form CTA -->
+                    <button type="submit" class="btn btn-primary w-full" id="btnSubmit">
+                        <span id="btnSubmitText">Execute Risk Analysis</span>
+                        <span class="btn-loader" id="submitLoader"></span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Results Panel Card -->
+            <section class="glass-card results-section" id="resultsCard">
+                <div class="results-empty" id="resultsEmptyState">
+                    <div class="empty-icon">📊</div>
+                    <h3 id="emptyStateTitle">No Active Analysis</h3>
+                    <p id="emptyStateText">Fill out the parameters on the left and execute the financial risk analysis to generate insights.</p>
+                </div>
+
+                <div class="results-content hidden" id="resultsRealContent">
+                    <div class="results-grid-header">
+                        <h2 id="analysisResultTitle">Portfolio Evaluation Results</h2>
+                        <span class="badge-severity" id="severityBadge">MEDIUM RISK</span>
+                    </div>
+
+                    <!-- Visualization Row -->
+                    <div class="visualization-block">
+                        <div class="chart-container">
+                            <canvas id="gaugeChart"></canvas>
+                            <div class="gauge-value-overlay">
+                                <span class="gauge-num" id="riskScoreNum">42%</span>
+                                <span class="gauge-label" id="riskScoreLabel">Risk Score</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Financial Index Metrics Grid -->
+                    <div class="metrics-grid">
+                        <!-- Metric 1: DTI -->
+                        <div class="metric-card">
+                            <span class="metric-title" id="metricDtiTitle">Expense-to-Income (DTI)</span>
+                            <span class="metric-value" id="metricDtiVal">37%</span>
+                            <span class="metric-status" id="metricDtiStatus">Acceptable</span>
+                        </div>
+                        <!-- Metric 2: Leverage -->
+                        <div class="metric-card">
+                            <span class="metric-title" id="metricLeverageTitle">Annual Debt Leverage</span>
+                            <span class="metric-value" id="metricLeverageVal">13%</span>
+                            <span class="metric-status" id="metricLeverageStatus">Low Leverage</span>
+                        </div>
+                        <!-- Metric 3: Payment Delay -->
+                        <div class="metric-card">
+                            <span class="metric-title" id="metricRepaymentTitle">Repayment Penalty</span>
+                            <span class="metric-value" id="metricRepaymentVal">15%</span>
+                            <span class="metric-status" id="metricRepaymentStatus">Minor Slippage</span>
+                        </div>
+                    </div>
+
+                    <!-- Generated Actionable Advice Panel -->
+                    <div class="advice-block">
+                        <h3 id="adviceTitleHeader">Proactive Advisories</h3>
+                        <div id="adviceBodyText" class="advice-content-text">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="dashboard-footer">
+        <p>© 2026 Tanbeeh (تنبّه) FinTech Systems. All rights reserved. Configured for High-Stakes Risk Assessment.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/script.js"></script>
+</body>
+</html>

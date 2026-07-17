@@ -1,0 +1,6 @@
+{
+  "name": "تنبّه (Tanbeeh)",
+  "description": "A professional high-end Financial Risk Analysis Tool for interactive portfolio and credit evaluation, providing actionable advice and real-time risk scores.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
